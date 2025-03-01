@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuários</title>
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Usuários</h1>
+        <a href="{% url 'usuario_create' %}" class="btn">Novo Usuário</a>
+
+        {% if usuarios %}
+            <ul class="user-list">
+                {% for usuario in usuarios %}
+                    <li class="user-item">
+                        <img src="{{ usuario.perfil.avatar_url }}" alt="Avatar de {{ usuario.nome }}" width="50">
+                        <div class="user-info">
+                            <span class="user-name">{{ usuario.nome }}</span>
+                            <span class="user-email">{{ usuario.email }}</span>
+                        </div>
+                        <div class="actions">
+                            <a href="{% url 'usuario_update' usuario.pk %}" class="btn-edit" aria-label="Editar {{ usuario.nome }}">Editar</a>
+                            <a href="{% url 'usuario_delete' usuario.pk %}" class="btn-delete" aria-label="Excluir {{ usuario.nome }}">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-users">Nenhum usuário cadastrado.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
